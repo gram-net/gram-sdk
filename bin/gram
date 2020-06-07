@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+set -e
+set -E
+# set -x
+DIR="$(cd $(dirname $(realpath "${BASH_SOURCE[0]}")) && pwd)"
+export TON=$(realpath $DIR/../ton)
+export GRAMCORE=$(realpath $DIR/..)
+export ETC=$(realpath $DIR/../etc)
+export GRAMCLI=1 # tell scripts they are running in this context
+cd $GRAMCORE
+export DEBUG=1
+
+if [ -e $GRAMCORE/.env ]; then
+  source $GRAMCORE/.env
+else
+  echo "No ENV file detected!"
+fi
+source $ETC/lib/lib.sh
+
+if [ "$DEPLOYTYPE" == "compose" ]; then
+  DOCKERPREFIX=gram-sdk
+  DOCKERSUFFIX=_1
+  DOCKER_CMDPREFIX="docker exec -it ${DOCKERPREFIX}_gram$DOCKERSUFFIX"
+elif [ "$DEPLOYTYPE" == "swarm" ]; then
+  DOCKERPREFIX=GRAM1
+  DOCKERSUFFIX=
+  DOCKER_CMDPREFIX="docker exec -it ${DOCKERPREFIX}_gram$DOCKERSUFFIX"
+fi
+export DOCKERPREFIX
+export DOCKERSUFFIX
+export DOCKER_CMDPREFIX
+
+set +e
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. $NVM_DIR/nvm.sh # This loads nvm
+set -e
+
+exitScript() {
+  EXITCODE=$?
+  if [ "$EXITCODE" != "0" ]; then
+    echo "EXIT $EXITCODE ${SCRIPTCMD}"
+  fi
+  exit $EXITCODE
+}
+trap exitScript EXIT
+
+debug "DIR=$DIR (not exported)"
+debug "TON=$TON"
+debug "GRAMCORE=$GRAMCORE"
+debug "ETC=$ETC"
+
+if [ "$1" == "" ]; then
+  gram help
+  ec "No command specified..."
+  exit
+fi
+SCRIPT_ETC=$ETC/$1
+SCRIPT_NODE=$ETC/node/$1
+SCRIPT_DOCKER=$ETC/docker/$1
+SCRIPT_UTILS=$ETC/utils/$1
+SCRIPT_RUN=$ETC/run/$1
+SCRIPT_INSTALL=$ETC/install/$1
+SCRIPT_MUX=$ETC/mux/$1
+
+# we do this so that other scripts can 'pretend' they were executed directly
+# BUT... they can get overwritten when scripts are nested, so be careful!
+ARG1=$2
+ARG2=$3
+ARG3=$4
+ARG4=$5
+ARG5=$6
+ARG6=$7
+
+if [ -x $SCRIPT_ETC.sh ]; then
+  SCRIPT=$SCRIPT_ETC.sh
+  ART=chaos
+elif [ -x $SCRIPT_DOCKER.sh ]; then
+  SCRIPT=$SCRIPT_DOCKER.sh
+  ART=docker
+elif [ -x $SCRIPT_UTILS.sh ]; then
+  SCRIPT=$SCRIPT_UTILS.sh
+  ART=utils
+elif [ -x $SCRIPT_RUN.sh ]; then
+  SCRIPT=$SCRIPT_RUN.sh
+  ART=run
+elif [ -x $SCRIPT_NODE.sh ]; then
+  SCRIPT=$SCRIPT_NODE.sh
+  ART=node
+elif [ -x $SCRIPT_INSTALL.sh ]; then
+  SCRIPT=$SCRIPT_INSTALL.sh
+  ART=install
+else
+  fail $1 "$1 Command not found. 'gram help' to see available commands"
+fi
+
+if [[ "$SCRIPT" =~ deploy ]]; then
+  ART=deploy
+fi
+export ART
+
+art() {
+  test -n "$ART" && cat $ETC/art/${ART}.txt
+}
+export -f art
+
+SCRIPTCMD="$SCRIPT $ARG1 $ARG2 $ARG3 $ARG4 $ARG5 $ARG6"
+ec "====_==_=_=== Executing GRAM command: ${SCRIPTCMD}"
+source $SCRIPTCMD
+cat $ETC/art/success.txt
+echo "gram $@"
+echo "========================="

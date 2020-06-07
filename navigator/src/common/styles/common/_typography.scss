@@ -1,0 +1,17 @@
+.font-sans-serif {
+  font-family: sans-serif;
+}
+
+.headline,
+.application,
+.display-1,
+.display-2,
+.display-3,
+.display-4,
+.title {
+  @extend .font-sans-serif;
+}
+
+.caption {
+    font-size: 12pt !important;
+  }

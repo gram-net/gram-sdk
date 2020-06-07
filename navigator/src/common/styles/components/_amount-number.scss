@@ -1,0 +1,31 @@
+.amount-number {
+    flex: 2;
+    font-size: 15pt;
+
+  .v-text-field__details {
+    margin-top: -.85rem;
+  }
+
+    
+  &.v-text-field
+    > .v-input__control
+    > .v-input__slot
+    > .v-text-field__slot {
+    padding: 12px 0px 0px 0px !important;
+  }
+
+    
+  &.v-text-field > .v-input__control > .v-input__slot:before,
+  &.v-text-field > .v-input__control > .v-input__slot:after {
+    width: 0;
+  }
+
+  .v-text-field__prefix {
+    font-size: 10pt;
+    margin-right: 10px;
+  }
+
+  .v-label {
+    margin-top: .75rem;
+  }
+}

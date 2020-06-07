@@ -1,0 +1,28 @@
+@import '~vuetify/src/styles/settings/colors';
+
+.bottom-action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+
+  &.type--static {
+    position: static;
+  }
+
+  .v-application.theme--dark & {
+    background: map-get($grey, 'darken-4')
+  }
+
+  .v-application.theme--light & {
+    background: map-get($shades, 'white')
+  }
+}
+
+.has--bottom-action-bar,
+[has--bottom-action-bar] {
+  padding-bottom: 80px !important;
+}

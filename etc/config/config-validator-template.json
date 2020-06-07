@@ -1,0 +1,70 @@
+{
+   "@type": "engine.validator.config",
+   "out_port": _TON_OUTGOING_,
+   "addrs": [{
+      "@type": "engine.addr",
+      "ip": _IP_,
+      "port": _TON_ENGINE_PORT_,
+      "categories": [
+         0,
+         1,
+         2,
+         3
+      ],
+      "priority_categories": []
+   }],
+   "adnl": [{
+         "id": "_DHT_",
+         "category": 0
+      },
+      {
+         "id": "_ADNL_",
+         "category": 1
+      },
+      {
+         "id": "_VALIDATORADNL_",
+         "category": 1
+      },
+      {
+         "id": "_VALIDATOR_ID_",
+         "category": 1
+      },
+      {
+         "id": "_VALIDATOR_TEMP_",
+         "category": 1
+      }
+   ],
+   "dht": [{
+      "id": "_DHT_"
+   }],
+   "validators": [{
+      "id": "_VALIDATOR_ID_",
+      "temp_keys": [{
+         "key": "_VALIDATOR_TEMP_",
+         "expire_at": _EXPIRE_
+      }],
+      "adnl_addrs": [{
+         "id": "_VALIDATORADNL_",
+         "expire_at": _EXPIRE_
+      }]
+   }],
+   "fullnode": "_ADNL_",
+   "fullnodeslaves": [],
+   "fullnodemasters": [],
+   "liteservers": [{
+      "id": "_LITESERVER_",
+      "port": 6304
+   }],
+   "control": [{
+      "id": "_SERVER_",
+      "port": 6303,
+      "allowed": [{
+         "id": "_CLIENT_",
+         "permissions": 15
+      }]
+   }],
+   "gc": {
+      "@type": "engine.gc",
+      "ids": []
+   }
+}

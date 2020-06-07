@@ -1,0 +1,41 @@
+.env
+.DS_Store
+/public/tapplets/*
+/public/wasm/*
+# key store
+*.jks
+
+/tests/e2e/reports/
+selenium-debug.log
+
+# local env files
+.env
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Cordova
+/src-cordova/platforms
+/src-cordova/plugins
+/src-cordova/www
+/src-cordova/*.apk
+/public/cordova.js
+*.apk
+
+#Electron-builder output
+/dist_electron
+
+tmp/
+.npm/
+*.log

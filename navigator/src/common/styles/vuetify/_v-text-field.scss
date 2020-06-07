@@ -1,0 +1,70 @@
+@import "~vuetify/src/styles/settings/colors";
+
+* .v-text-field input {
+  line-height: 0.9;
+  max-height: none;
+}
+
+.amount-number {
+  .theme--light.v-label {
+    color: rgba(black, 0.54) !important;
+  }
+  .theme--dark.v-label {
+    color: rgba(white, 0.54) !important;
+  }
+
+  .v-application.theme--light & {
+    .v-text-field__prefix {
+      color: rgba(black, 0.54) !important;
+    }
+  }
+  .v-application.theme--dark & {
+    .v-text-field__prefix {
+      color: rgba(white, 0.54) !important;
+    }
+  }
+}
+
+.v-text-field.type--large {
+  font-size: 2rem;
+
+  &.error--text {
+    input {
+      color: inherit;
+    }
+  }
+
+  .v-input__control input {
+    max-height: none !important;
+  }
+
+  .v-messages {
+    color: rgba(white, 0.9) !important;
+    font-size: 0.875rem !important;
+    margin-top: 0.5rem;
+  }
+
+  .v-input__icon--append {
+    position: relative;
+    top: -0.125rem;
+  }
+
+  .v-text-field__details {
+    padding: 0 !important;
+  }
+
+  .v-label {
+    overflow: initial;
+    font-size: 2rem;
+  }
+}
+
+.v-text-field.has--copy input {
+  font-size: 15px;
+  opacity: 0.7;
+}
+
+.v-input.has--copy .v-input__icon {
+  transform: scale(0.75);
+  opacity: 0.7;
+}

@@ -1,0 +1,10 @@
+{
+  "apps" : [{
+    "namespace": "gram",
+    "name"       : "validator-engine",
+    "script"     : "gram validator",
+    "exec_interpreter": "none",
+    "exec_mode"  : "fork_mode"
+  }]
+}
+

@@ -1,0 +1,22 @@
+{
+  "liteservers": [
+    {
+      "ip": _IP_,
+      "port": _LITESERVER_PORT_,
+      "id": {
+        "@type": "pub.ed25519",
+        "key": "_LITESERVER_"
+      }
+    }
+  ],
+  "validator": {
+    "@type": "validator.config.global",
+    "zero_state": {
+      "workchain": -1,
+      "shard": -9223372036854775808,
+      "seqno": 0,
+      "root_hash": "_RHASH_",
+      "file_hash": "_FHASH_"
+    }
+  }
+}

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang=en-us>
+
+<head>
+  <meta charset=utf-8>
+  <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+  <title>FIFT/FUNC Test Runner</title>
+  <style>
+    button {
+      font-size: 16pt;
+      margin:10px 0px;
+      display:block;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="asm"><h2>ASM</h2></div>
+  <div id="async"><h2>ASYNC ASM</h2></div>
+  <div id="wasm"><h2>WASM</h2></div>
+  <script type="module">
+    import { Func, Fift } from './dist/wasm.js';
+    import * as FIXT from './dist/fixt-files.js'
+    import TestWasm from './dist/__tests__/test-wasm.js';
+    (async function() {
+      let fiftWasmFetch = await fetch("./wasm/fift.wasm")
+      let fiftWasm = await fiftWasmFetch.arrayBuffer()
+
+      let funcWasmFetch = await fetch("./wasm/func.wasm")
+      let funcWasm = await funcWasmFetch.arrayBuffer()
+
+      let fiftBinFetch = await fetch("./wasm/fift.bin")
+      let fiftBin = await fiftBinFetch.arrayBuffer()
+
+      let funcBinFetch = await fetch("./wasm/func.bin")
+      let funcBin = await funcBinFetch.arrayBuffer()      
+
+      let fiftMemFetch = await fetch("./wasm/fift.js.mem")
+      let fiftMem = await fiftMemFetch.arrayBuffer()
+
+      let funcMemFetch = await fetch("./wasm/func.js.mem")
+      let funcMem = await funcMemFetch.arrayBuffer()   
+      
+      let fiftMemAsyncFetch = await fetch("./wasm/fiftasync.js.mem")
+      let fiftMemAsync = await fiftMemAsyncFetch.arrayBuffer()
+
+      let funcMemAsyncFetch = await fetch("./wasm/funcasync.js.mem")
+      let funcMemAsync = await funcMemAsyncFetch.arrayBuffer()   
+
+      let funcObjAsync = new Func(null, funcBin, funcMemAsync);
+      let fiftObjAsync = new Fift(null, fiftBin, fiftMemAsync);
+      let funcObjAsm = new Func(null, null, funcMem);
+      let fiftObjAsm = new Fift(null, null, fiftMem);
+      let funcObjWasm = new Func(funcWasm);
+      let fiftObjWasm = new Fift(fiftWasm);
+
+      const testWasm = new TestWasm()
+      const testList = testWasm.list()
+      let colorsArray = [
+          'firebrick',
+          'fuchsia',
+          'honeydew',
+          'khaki',
+          'orange',
+          'olive',
+          'lightblue',
+          'teal'
+        ];
+
+      async function createTestButton(index,type,test,imports) {
+        let el = document.createElement("button")
+        el.id = type+"-"+test
+        el.style.backgroundColor = colorsArray[index];
+        el.innerHTML = type+"-"+test
+        console.log(type,test)
+        document.getElementById(type).appendChild(el)
+        el.onclick = async (ev) => {
+          let testWasm = new TestWasm(imports)
+          console.log('%c%s','padding:5px;color:green;font-size:12pt;',type)
+          ev.srcElement.disabled = true;
+          await testWasm.runTest(test);
+          ev.srcElement.disabled = false
+        };        
+      } 
+      for (let t in testList) {
+        createTestButton(t,"asm",testList[t],{fiftObj:fiftObjAsm,funcObj:funcObjAsm})
+        createTestButton(t,"async",testList[t],{fiftObj:fiftObjAsync,funcObj:funcObjAsync})
+        createTestButton(t,"wasm",testList[t],{fiftObj:fiftObjWasm,funcObj:funcObjWasm})
+      }
+
+      async function testSendfile() {
+
+        let files = [{name:'new.fif', data:FIXT.newWallet}]
+        let args = ['-s','new.fif','0', 'new']
+        let outfiles=['new-query.boc','new.addr','new.pk']
+        await fiftObj.exec(files,args,outfiles)
+        console.log(fiftObj.log,fiftObj)
+        const blobFromBuffer = (buffer) => new Blob([new Uint8Array(buffer).buffer]);
+
+
+        let fileObj = fiftObj.outFilesBuffers['new-query.boc'].data
+        console.warn(fileObj)
+
+        var form = new FormData()
+        let filedata = blobFromBuffer(fileObj)
+        console.warn(filedata)
+        form.append('filedata', filedata)
+
+        let config = {
+          url: 'http://localhost:8084/sendfile',
+          method: 'post', // default
+          mode: 'no-cors',
+          // `headers` are custom headers to be sent
+          headers: {'Content-Type': 'multipart/form-data'},
+          body: form
+        }
+        
+        fetch(config.url, config) 
+        .then((response) => {console.log(response);})
+        .catch((error) => {
+          console.error(error);
+        })    
+      }
+    })();
+  </script>
+</body>
+
+</html>

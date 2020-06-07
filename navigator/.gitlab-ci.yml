@@ -1,0 +1,73 @@
+stages:
+  - setup
+  - build
+  - deploy
+
+setup:
+  stage: setup
+  image: chriswijnia/dev:latest
+  script:
+    - DEPLOY_ENV=production 
+    - yarn setup
+    - yarn prebuild
+  cache:
+    key: ${CI_JOB_NAME}
+    paths:
+      - node_modules/
+      - src-cordova/node_modules/
+
+build-android:
+  image: chriswijnia/dev:latest
+  stage: build
+  dependencies:
+    - setup
+  only:
+    - tags
+  script:
+    - "[[ -z $CI_COMMIT_TAG ]] || ./bin/update-version.sh $CI_COMMIT_TAG"
+    - yarn build-android
+  cache:
+    key: ${CI_JOB_NAME}
+    paths:
+      - src-cordova/node_modules/
+      - src-cordova/platforms/
+      - src-cordova/plugins/
+  artifacts:
+    paths:
+      - src-cordova/app-release-unsigned.apk
+
+deploy-android:
+  image: chriswijnia/dev:latest
+  stage: deploy
+  dependencies:
+    - build-android
+  only:
+    - tags
+  script:
+    - yarn deploy-android
+  artifacts:
+    paths:
+      - src-cordova/app-release.apk
+
+deploy-ios:
+  stage: deploy
+  cache:
+    key: ${CI_JOB_NAME}
+    paths:
+      - node_modules/
+      - src-cordova/node_modules/
+      - src-cordova/platforms/
+      - src-cordova/plugins/
+  only:
+    - tags
+  script: 
+    - "[[ -z $CI_COMMIT_TAG ]] || ./bin/update-version.sh $CI_COMMIT_TAG"
+    - DEPLOY_ENV=production
+    - yarn setup
+    - yarn prebuild 
+    - yarn build-ios 
+    - yarn deploy-ios
+  tags:
+    - ios_9-2
+    - xcode_7-2
+    - osx_10-11

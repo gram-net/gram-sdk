@@ -1,0 +1,4 @@
+app_identifier "network.gram.navigator"
+json_key_file "fastlane/android-service-account.json"
+apple_id "ccwijnia@gmail.com"
+team_id "J55TV7LS9N"

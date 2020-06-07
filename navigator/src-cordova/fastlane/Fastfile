@@ -1,0 +1,63 @@
+opt_out_usage
+
+ENV["GYM_PROJECT"] = "platforms/ios/Tigerbee.xcodeproj"
+ENV["GYM_WORKSPACE"] = "platforms/ios/Tigerbee.xcworkspace"
+ENV["IOS_PROVISION_PROFILE"] = "comtigerbeeui.mobileprovision"
+ENV["FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD"] = "xvvg-odqj-iqkq-yrfc"
+ENV["FASTLANE_USER"] = "ccwijnia@gmail.com"
+ENV["LANG"] = "en_US.UTF-8"
+ENV["LANGUAGE"] = "en_US.UTF-8"
+ENV["LC_ALL"] = "en_US.UTF-8"
+ENV["TEAM_ID"] = "J55TV7LS9N"
+# ENV["FASTLANE_SESSION"] = "---\n- !ruby/object:HTTP::Cookie\n  name: DES51e0981972674748eb88f13fd6807e6d0\n  value: HSARMTKNSRVXWFlat2r1bvsGrzeryTaGyFBIxx/1008AtVBXnieNgMS1LnHd7ogCB5tDlSI69CVhFz3JcvnY20IntgOWXP3ap1KEdASGv6A+eM9Of7yqqz9ld6WuaKiHNqHN0z9HSRVX\n  domain: idmsa.apple.com\n  for_domain: true\n  path: "/"\n  secure: true\n  httponly: true\n  expires: \n  max_age: 2592000\n  created_at: &1 2020-03-05 18:50:55.809933000 +08:00\n  accessed_at: *1\n- !ruby/object:HTTP::Cookie\n  name: myacinfo\n  value: DAWTKNV22abc94999e09682c4a8106cbc6a4f972364e3831e137531d7b72f31a5f45b3c604441e9d0c856fa967e01220fbcf3da00f41ed283daab161618d34365c3f92413f3e15c0ef7e1339fe7aab01c56c6a5b38cfca02b1a5157d22231141e42e8af6ee7619d143fdcbaa479f89bf0b13516742f774e54701173146536be2c273b3b4fbc36b5d6d91adbce116fdcabe4865c2e192411654cd8e1d9a31e6606fe31a0ebd55505d3a617f2eea82f35e8f6d3cd8eee550b83498f2649c276538d06932a755c6cb6978bf5de498ef7095f8935268b62847404d38775aa45fa74ce5d31e675f8f6ba47aa7d7dda6ffec1e8a18ce1307f932b6eef1ff1cb850431f4a2b225419dd31ae276cf5fa2db1b5ceb284000486b74e1c72b7e8ed1da633e6dbdc9f942a8c825e709dd58864a75016c9d641f34412b6a7c69ff35ae675c36101861b519b6d2d66fe46a5a31b0f067fdfbeaad03039230b2a4669d380746b402680bf956425f201c7cabcec029a0df804b5c9e536386433313164306533316662376636333663303530616432343538363663666161376133666562MVRYV2\n  domain: apple.com\n  for_domain: true\n  path: "/"\n  secure: true\n  httponly: true\n  expires: \n  max_age: \n  created_at: 2020-03-05 18:50:55.810087000 +08:00\n  accessed_at: 2020-03-05 18:50:55.823164000 +08:00\n- !ruby/object:HTTP::Cookie\n  name: dqsid\n  value: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODM0MDU0NTYsImp0aSI6IkJVa3hnWFRLbTdRVG05N0RQQkFGWHcifQ.GomRY2pWuMfO4GEj_jnpP51wAT-O6CeO56UWYq_tWYc\n  domain: appstoreconnect.apple.com\n  for_domain: false\n  path: "/"\n  secure: true\n  httponly: true\n  expires: \n  max_age: 1799\n  created_at: &2 2020-03-05 18:50:56.595056000 +08:00\n  accessed_at: *2\n"
+
+platform :android do
+  desc "Build android app"
+  lane :build do
+    cordova(
+      platform: 'android',
+      keystore_path: './tigerbee.keystore',
+      keystore_alias: 'tigerbee',
+      keystore_password: 'tigerbee'
+    ) # Cordova Fastlane Plugin
+    supply(
+      release_status: 'draft',
+      track: 'alpha',
+      apk: ENV['CORDOVA_ANDROID_RELEASE_BUILD_PATH']
+    )
+  end
+end
+
+platform :ios do
+  desc "Build the IOS application"
+  lane :build do
+    disable_automatic_code_signing(path: ENV["GYM_PROJECT"],
+      team_id: ENV["TEAM_ID"]
+    )
+
+    update_project_provisioning(
+      xcodeproj: ENV["GYM_PROJECT"],
+      profile: ENV["IOS_PROVISION_PROFILE"], # optional if you use sigh
+      target_filter: ".*WatchKit Extension.*", # matches name or type of a target
+      build_configuration: "Release",
+      code_signing_identity: "Apple Distribution: Christian Wijnia (J55TV7LS9N)" # optionally specify the codesigning identity
+    )
+
+    # gym(
+    #   scheme:"Somia",
+    #   configuration: "Release",
+    #   clean: true,
+    #   export_method: "app-store",
+    #   # output_directory:"./build/",
+    #   export_options: {
+    #     method: "app-store",
+    #     provisioningProfiles: { 
+    #       "com.somia.ui" => ENV["sigh_com.com.somia.ui.test_appstore_profile-name"]
+    #     }
+    #   },
+    #   codesigning_identity:"iPhone Distribution: Christian Wijnia Common Name(#{ENV["TEAM_ID"]})",
+    #   output_name: "Somia.ipa"
+    # )
+    # upload_to_testflight
+  end
+end

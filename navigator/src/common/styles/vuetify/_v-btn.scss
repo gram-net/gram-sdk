@@ -1,0 +1,20 @@
+a {
+  text-decoration: none;
+}
+
+.v-btn-toggle {
+  & > .v-btn {
+    border: 0 !important;
+  }
+}
+
+.v-btn {
+  &.type--square {
+    border-radius: 0;
+  }
+
+  &.type--outline {
+    border-radius: 4px;
+    border-color: rgba(white, 0.4);
+  }
+}

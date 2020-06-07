@@ -1,0 +1,9 @@
+{
+  "apps" : [{
+    "namespace": "gram",
+    "name"       : "gram-docs",
+    "script"     : "gram docs",
+    "exec_interpreter": "none",
+    "exec_mode"  : "fork_mode"
+  }]
+}

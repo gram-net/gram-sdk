@@ -1,0 +1,23 @@
+.phrase-container {
+  max-width: 465px;
+  margin: auto;
+  text-align: left;
+}
+
+.v-chip.v-size--large.phrase-chip {
+  margin: 6px 5px;
+  width: calc(25% - 10px);
+
+  @media screen and (max-width: 600px) {
+    width: calc(33% - 9px);
+  }
+  @media screen and (max-width: 480px) {
+    width: calc(50% - 11px);
+  }
+  text-align: center;
+  display: inline-block;
+  line-height: 44px;
+  height: 44px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GRAM SDK</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="With GRAM you can:">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+  <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/themes/dark.css"> -->
+  <style>
+    :root {
+        /* Tab blocks */
+        --docsifytabs-border-color          : #ededed;
+        --docsifytabs-border-px             : 1px;
+        --docsifytabs-border-radius-px      : ;
+        --docsifytabs-margin                : 1.5em 0;
+
+        /* Tabs */
+        --docsifytabs-tab-background        : #f8f8f8;
+        --docsifytabs-tab-background--active: var(--docsifytabs-content-background);
+        --docsifytabs-tab-color             : #999;
+        --docsifytabs-tab-color--active     : inherit;
+        --docsifytabs-tab-highlight-px      : 3px;
+        --docsifytabs-tab-highlight-color   : var(--theme-color, currentColor);
+        --docsifytabs-tab-padding           : 0.6em 1em;
+
+        /* Tab content */
+        --docsifytabs-content-background    : inherit;
+        --docsifytabs-content-padding       : 0.5rem 1.75rem;
+    }
+
+  </style>  
+</head>
+<body>
+  <div id="app"></div>
+
+<script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+  <script>
+    window.$docsify = {
+      ga: 'UA-XXXXX-Y',
+      name: 'GRAM',
+      repo: 'https://gitlab.com/gram-net/gram-sdk',
+      loadSidebar: true,
+      subMaxLevel: 5,
+      auto2top: true,
+      autoHeader: true,
+      executeScript: true,
+      mergeNavbar: true,
+      topMargin: 90, // default: 0      
+      tabs: {
+        persist    : true,      // default
+        sync       : true,      // default
+        theme      : 'classic', // default
+        tabComments: true,      // default
+        tabHeadings: true       // default
+      },    
+      search: 'auto', // default
+
+      search : [
+        '/',            // => /README.md
+        '/reference',       // => /guide.md
+        '/tapps/',      // => /zh-cn/README.md
+      ],
+
+      // complete configuration parameters
+      search: {
+        maxAge: 86400000, // Expiration time, the default one day
+        paths: [], // or 'auto'
+        placeholder: 'Type to search',
+
+        // Localization
+        placeholder: {
+          '/zh-cn/': '搜索',
+          '/': 'Type to search'
+        },
+
+        noData: 'No Results!',
+
+        // Localization
+        noData: {
+          '/zh-cn/': '找不到结果',
+          '/': 'No Results'
+        },
+
+        // Headline depth, 1 - 6
+        depth: 2,
+
+        hideOtherSidebarContent: false, // whether or not to hide other sidebar content
+
+        // To avoid search index collision
+        // between multiple websites under the same domain
+        namespace: 'website-1',
+      }
+    }
+  </script>  
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js" data-ga="UA-XXXXX-Y"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>  
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/ga.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+</body>
+</html>

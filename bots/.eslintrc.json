@@ -1,0 +1,48 @@
+{
+  "root": true,
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true,
+    "browser": true
+  },
+  "plugins": ["cypress"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",   
+    "prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+    "plugin:prettier/recommended" // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.    
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "cy": false,
+    "Cypress": false    
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true // Allows for the parsing of JSX
+    }
+  },
+  "rules": {
+    "@typescript-eslint/ban-ts-comment": 1,
+    "@typescript-eslint/no-empty-function": 1,
+    "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/no-explicit-any": 1,
+    "no-prototype-builtins": 1,
+    "no-unused-vars": 1,
+    "no-console": 0,
+    "no-debugger": 0,
+    "no-undef": 1,
+    "no-var": 2,
+    "max-len": [2, 500000, 4, {
+      "ignoreUrls": true
+    }],
+    "strict": 2
+  }
+}

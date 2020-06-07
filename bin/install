@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -e
+set -E
+DIR="$(cd $(dirname $(realpath "${BASH_SOURCE[0]}")) && pwd)"
+cd $DIR
+echo "Installing GRAM SDK Binary"
+sudo rm -rf /usr/local/bin/gram
+sudo ln -s $(realpath ./gram) /usr/local/bin/gram
+echo "Installing GRAM SDK"
+gram init

@@ -1,0 +1,69 @@
+{
+  "root": true,
+  "env": {
+    "es6": true,
+    "node": true,
+    "mocha": true,
+    "browser": true
+  },
+  "plugins": ["cypress"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "cy": false,
+    "Cypress": false
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true // Allows for the parsing of JSX
+    }
+  },
+  "extends": [
+    // basic eslint and typescript rules
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    // can you figure out how to do this line?
+    // "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    // Vue recommended settings
+    "plugin:vue/recommended",
+    // Vue typescript settings
+    "@vue/typescript",
+    // Enable eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.    
+    "prettier/@typescript-eslint",
+    "@vue/prettier/@typescript-eslint", // resolve conflicts in favor of prettier
+    // enables prettier rules
+    "plugin:prettier/recommended",
+    "@vue/prettier/recommended"
+  ],
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser"
+  },
+  "rules": {
+    "@typescript-eslint/no-empty-function": 1,
+    "@typescript-eslint/no-empty-interface": 0,
+    "no-prototype-builtins": 1,
+    "@typescript-eslint/no-var-requires": 1,
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "no-console": 0,
+    "no-debugger": 0,
+    "no-undef": 1,
+    "no-var": 2,
+    "no-unused-vars": 0,
+    "max-len": [2, 500000, 4, {
+      "ignoreUrls": true
+    }],
+    "strict": 2
+  },
+  "overrides": [{
+    "files": [
+      "**/__tests__/*.{j,t}s?(x)",
+      "**/tests/unit/**/*.spec.{j,t}s?(x)"
+    ]
+  }]
+}

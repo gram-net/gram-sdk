@@ -1,0 +1,16 @@
+{
+  "comments": ["WARNING. This file is located in GRAMMMMM root directory.",
+  "editing below will cause ALL nodemon behavior to change",
+  "not just one app/folder!"],
+  "ignoreRoot": [".git"],
+  "ignore": [],
+  "delay": "2000",
+  "ext": "ts js md html",
+  "events": {
+      "restart": "",
+      "start": "",
+      "crash": "echo $npm_package_name",
+      "exit": "echo $npm_package_name",
+      "config:update": ""
+    }   
+}

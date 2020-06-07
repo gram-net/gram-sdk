@@ -1,0 +1,130 @@
+.clickable {
+  cursor: pointer;
+}
+
+.unclickable {
+  cursor: default;
+  pointer-events: none;
+}
+
+.d-transparent {
+  opacity: 0;
+}
+
+.img-full {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.half-transparent--text,
+.half-transparent {
+  opacity: 0.5;
+  .error--text & {
+    opacity: unset;
+  }
+}
+
+.slightly-transparent--text,
+.slightly-transparent {
+  opacity: 0.7;
+  .error--text & {
+    opacity: unset;
+  }
+}
+
+.quite-transparent--text,
+.quite-transparent {
+  opacity: 0.3;
+  .error--text & {
+    opacity: unset;
+  }
+}
+
+.break-word {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.overflow-initial {
+  overflow: initial !important;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+}
+
+.text-xs-center {
+  text-align: center;
+}
+
+.v-list-item__title.type--flex,
+.card-title.type--flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  opacity: 0.7;
+  font-size: 1.25rem;
+}
+
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+.text-center {
+  text-align: center;
+}
+.text-justify {
+  text-align: justify;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+.overflow-y-auto {
+  overflow-y: auto;
+}
+.overflow-auto {
+  overflow: auto;
+}
+
+.selectable {
+  pointer-events: all;
+  cursor: text;
+  user-select: text;
+}
+
+.mono {
+  font-family: monospace;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes pulse1 {
+  0% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,22 @@
+@import '~vuetify/src/styles/settings/colors';
+
+.v-application.theme--dark {
+  .v-list-highlight {
+    background: map-get($grey, 'darken-2');
+  }
+}
+
+.v-application.theme--light {
+  .v-list-highlight {
+    background: map-get($grey, 'lighten-2');
+  }
+}
+
+.list--clean {
+  background: none !important;
+
+  &,
+  .v-list-item {
+    padding: 0;
+  }
+}

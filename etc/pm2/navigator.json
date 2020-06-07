@@ -1,0 +1,9 @@
+{
+  "apps": [{
+    "namespace": "gram",
+    "name": "gram-navigator",
+    "script": "gram navigator",
+    "exec_interpreter": "none",
+    "exec_mode": "fork_mode"
+  }]
+}

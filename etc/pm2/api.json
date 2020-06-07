@@ -1,0 +1,21 @@
+{
+  "apps" : [{
+    "namespace": "gram",
+    "name"       : "web-exp",
+    "script"     : "gram web-exp",
+    "exec_interpreter": "none",
+    "exec_mode"  : "fork_mode"
+  }, {
+    "namespace": "gram",
+    "name"       : "json-exp",
+    "script"     : "gram json-exp",
+    "exec_interpreter": "none",
+    "exec_mode"  : "fork_mode"
+  },{
+    "namespace": "gram",
+    "name"       : "gram-api",
+    "script"     : "gram api",
+    "exec_interpreter": "none",
+    "exec_mode"  : "fork_mode"
+  }]
+}

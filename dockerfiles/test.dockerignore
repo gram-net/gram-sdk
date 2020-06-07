@@ -1,0 +1,14 @@
+**/.git
+**/.cache
+bin/osx
+bin/linux_x64
+tondb/
+profile/
+**/.env
+api/uploads/
+navigator/dist_electron/
+navigator/public/wasm/
+navigator/src-cordova/platforms/
+navigator/src-cordova/plugins/
+navigator/src-cordova/www
+build/

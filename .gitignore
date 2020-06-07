@@ -1,0 +1,21 @@
+# docker-compose.yml, .dockerignore and Dockerfile are auto-generated
+docker-compose.yml
+Dockerfile
+.dockerignore
+.env
+**/node_modules/
+navigator/dist_electron/
+**/*.*-e
+ton/
+wasm/dist
+bots/dist
+tondb/
+profile/
+tmux*.log
+build/
+**/.yarn-integrity
+**/report.*.json
+**/yarn*.log
+**/tsconfig.tsbuildinfo
+**/.npm
+**/android-service-account.json

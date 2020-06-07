@@ -1,0 +1,64 @@
+{
+  "name": "gramm-bots",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "license": "LGPL-2.1-only",
+  "engines": {
+    "node": "12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com/gram-net/gram.git"
+  },  
+  "bugs": {
+    "url": "https://github.com/gram-net/gram/issues"
+  },
+  "homepage": "https://thegram.org",  
+
+  "scripts": {
+    "lint": "eslint src --fix",
+    "build": "cat .env-tokens >> .env && yarn lint && tsc",
+    "start": "nodemon -w ./src --exec 'yarn build && node -r dotenv/config --experimental-modules ./dist/index.js'",
+    "test": "yarn start test"
+  },
+  "dependencies": {
+    "firebase": "~7.14.5",
+    "telegraf": "~3.38.0",
+    "tweetnacl": "~1.0.3",
+    "bip39-ts": "~1.0.6",
+    "chalk": "~4.0.0",
+    "docsify": "~4.11.3",
+    "dotenv": "~8.2.0",
+    "ed25519-hd-key": "~1.1.2",
+    "http-server": "~0.12.3",
+    "pm2": "~4.4.0",
+    "winston": "~3.2.1"    
+  },
+  "devDependencies": {
+    "chai": "~4.2.0",
+    "form-data": "~3.0.0",
+    "@types/mocha": "~7.0.2",
+    "@types/node": "~14.0.5",
+    "@typescript-eslint/eslint-plugin": "~3.0.0",
+    "@typescript-eslint/parser": "~3.0.0",
+    "chalk-cli": "~4.1.0",
+    "cypress": "~4.7.0",
+    "eslint": "~7.1.0",
+    "eslint-config-cypress": "~0.28.0",
+    "eslint-config-prettier": "~6.11.0",
+    "eslint-plugin-import": "~2.20.2",
+    "eslint-plugin-node": "~11.1.0",
+    "eslint-plugin-prettier": "~3.1.3",
+    "eslint-plugin-promise": "~4.2.1",
+    "eslint-plugin-standard": "~4.0.1",
+    "husky": "~4.2.5",
+    "lint-staged": "~10.2.6",
+    "mocha": "~7.2.0",
+    "nodemon": "~2.0.4",
+    "prettier": "~2.0.5",
+    "typescript": "~3.9.3",
+    "yarn": "~1.22.4"    
+  }
+}
