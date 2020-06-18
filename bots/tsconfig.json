@@ -19,16 +19,16 @@
       "DOM",
       "DOM.Iterable",
       "scripthost"
-    ],    
+    ],
     "outDir": "./dist",
     "rootDir": "./src",
     "baseUrl": ".",
     "composite": true,
-    "sourceMap":true,
+    "sourceMap": true,
     "declarationMap": true
   },
   "exclude": [
     "dist/",
     "node_modules/"
-  ]    
+  ]
 }

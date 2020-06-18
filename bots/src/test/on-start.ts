@@ -1,6 +1,7 @@
 /** @format */
 
-import { Context } from '../telegraf.js'
+import { Context, Stage } from '../telegraf.js'
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const onStart = (ctx: typeof Context): void => {
-  ctx.reply(`Deep link payload: ${ctx.startPayload}`)
+  ctx.reply('Send any text message to start.')
 }

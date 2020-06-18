@@ -2,7 +2,8 @@
 docker-compose.yml
 Dockerfile
 .dockerignore
-.env
+**/.env*
+**/*credentials.js*
 **/node_modules/
 navigator/dist_electron/
 **/*.*-e
@@ -11,8 +12,8 @@ wasm/dist
 bots/dist
 tondb/
 profile/
-tmux*.log
-build/
+**/tmux*.log
+**/build/
 **/.yarn-integrity
 **/report.*.json
 **/yarn*.log

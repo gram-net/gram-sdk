@@ -27,6 +27,3 @@ _enterAddress.on('text', (ctx: typeof Context) => {
     // TODO: update DB record
   }
 })
-_enterAddress.on('message', (ctx: typeof Context) => {
-  ctx.reply('This bot only accepts text messages')
-})

@@ -6,106 +6,53 @@ import { onStart } from './on-start.js'
 import { onHelp } from './on-help.js'
 import { onMessage } from './on-message.js'
 import { inlineQuery } from './inline-query.js'
-import { _giveWizard } from './give-wizard.js'
+import { giveScene } from './give-scene.js'
 import { _redeemWizard } from './redeem-wizard.js'
 import { _verifyWizard } from './verify-wizard.js'
+import { mainScene } from './main-scene.js'
 
-import { Extra, Context, Scene, Markup } from '../telegraf.js'
+import { Scene, Markup, Context, Stage } from '../telegraf.js'
 import { BotConfig, BotEventHandler } from '../bot.js'
 
-const scenes: typeof Scene[] = [_giveWizard, _redeemWizard]
+const scenes: typeof Scene[] = [mainScene, giveScene, _verifyWizard, _redeemWizard]
 const onHandlers: BotEventHandler[] = []
 const cmdHandlers: BotEventHandler[] = []
 const actionHandlers: BotEventHandler[] = []
+const hearsHandlers: BotEventHandler[] = []
 
-const botid = 'tfntestbot1'
-const botname = 'test'
-
-actionHandlers.push({
-  command: 'special',
-  handler: (ctx: typeof Context) => {
-    return ctx.reply(
-      'Special buttons keyboard',
-      Extra.markup((markup: any) => {
-        return markup
-          .resize()
-          .keyboard([
-            markup.contactRequestButton('Send contact'),
-            markup.locationRequestButton('Send location')
-          ])
-      })
-    )
-  }
-})
-
-actionHandlers.push({
-  command: 'italic',
-  handler: async (ctx: typeof Context, next: any) => {
-    try {
-      await ctx.answerCbQuery()
-      await ctx.editMessageCaption(
-        '_Caption_',
-        Extra.markdown().markup(
-          Markup.inlineKeyboard([
-            Markup.callbackButton('Plain', 'plain'),
-            Markup.callbackButton('* Italic *', 'italic')
-          ])
-        )
-      )
-    } catch (e) {
-      console.error(e)
-    }
-    return ctx.reply('👍').then(() => next())
-  }
-})
+const botid = <string>process.env.BOTID_TEST
+const botname = <string>process.env.BOTNAME_TEST
 cmdHandlers.push({
   command: 'give',
-  handler: (ctx: typeof Context) => {
-    // TODO: authenticate user
-    ctx.scene.enter('giveWizard')
+  handler: (ctx: any) => {
+    ctx.scene.enter('giveScene')
   }
 })
-
-// TODO: check balance command
-
-// TODO: deposit command
-
 cmdHandlers.push({
   command: 'redeem',
-  handler: (ctx: typeof Context) => {
-    // check DB for records on this user
+  handler: (ctx: any) => {
     ctx.scene.enter('redeemWizard')
   }
 })
-
-onHandlers.push({
-  command: 'message',
-  handler: (ctx: typeof Context) => {
-    // TODO: check DB status of the user
+cmdHandlers.push({
+  command: 'admin',
+  handler: (ctx: any) => {
+    const addressLink = 'http://google.com/TODO'
     ctx.reply(
-      'Select /redeem or /give',
-      Markup.keyboard(['/redeem', '/give']).resize().extra()
-    )
-    return ctx.replyWithPhoto(
-      { url: 'https://picsum.photos/200/300/?random' },
-      Extra.load({ caption: 'Caption' })
-        .markdown()
-        .markup((m: any) =>
-          m.inlineKeyboard([
-            m.callbackButton('Plain', 'plain'),
-            m.callbackButton('Italic', 'italic')
-          ])
-        )
+      'Bot Admin',
+      Markup.inlineKeyboard([
+        Markup.urlButton('Deposit Address: <TODO>', addressLink)
+      ]).extra()
     )
   }
 })
-
 export const botConfig: BotConfig = {
   dbname: botname,
   botid: botid,
   cmdHandlers,
   onHandlers,
   actionHandlers,
+  hearsHandlers,
   scenes,
   onStart,
   onHelp,

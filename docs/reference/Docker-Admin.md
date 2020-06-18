@@ -47,13 +47,13 @@ Tag local image with remote registry URL
 `docker tag $IMAGENAME $REGISTRYURL:$VERSION`
 
 Example:
-`docker tag gram-net/gram:local registry.gitlab.com/gram-net/gram:0.0.1`
+`docker tag gram-net/gram-release:local registry.gitlab.com/gram-net/gram-sdk:1.0.0`
 
 Push image
 `docker push ${REGISTRYURL}/${REGISTRYNAME}/${REGISTRYLOGINURL}:${REGISTRYTAG}`
 
 Example:
-`docker push registry.gitlab.com/gram-net/gram:0.0.1`
+`docker push registry.gitlab.com/gram-net/gram-sdk:1.0.0`
 
 ## Docker Compose Reference
 

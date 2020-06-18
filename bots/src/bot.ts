@@ -8,8 +8,8 @@ import ed25519 from 'ed25519-hd-key'
 const { getPublicKey, getMasterKeyFromSeed } = ed25519
 import { tokensObj, BotTokens } from './tokens.js'
 
-export type BotEventHandler = { command: typeof UpdateType; handler: any }
-export type ContextHandler = (ctx: typeof Context) => void
+export type BotEventHandler = { command: typeof UpdateType | RegExp; handler: any }
+export type ContextHandler = (ctx: typeof Context, next?: any) => void
 export interface BotConfig {
   scenes: Array<typeof Scene>
   dbname: string
@@ -17,6 +17,7 @@ export interface BotConfig {
   cmdHandlers: BotEventHandler[]
   onHandlers: BotEventHandler[]
   actionHandlers: BotEventHandler[]
+  hearsHandlers: BotEventHandler[]
   CustomContext: typeof Context
   onStart: ContextHandler
   inlineQuery: ContextHandler
@@ -49,6 +50,7 @@ export class BotKey {
     this.pubkey = getPublicKey(key)
     this.keypair = nacl.sign.keyPair.fromSeed(key)
     const signed = nacl.sign(Buffer.from('test_string'), this.keypair.secretKey)
-    console.warn('test signature', signed)
+    // console.warn('test signature', signed)
+    console.warn('pub key', this.keypair.publicKey)
   }
 }

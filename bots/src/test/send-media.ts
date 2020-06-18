@@ -19,7 +19,17 @@
 //   'https://picsum.photos/200/300/?random',
 //   Extra.caption('Caption *text*').markdown()
 // ))
-
+// return ctx.replyWithPhoto(
+//   { url: 'https://picsum.photos/200/300/?random' },
+//   Extra.load({ caption: 'Caption' })
+//     .markdown()
+//     .markup((m: any) =>
+//       m.inlineKeyboard([
+//         m.callbackButton('Plain', 'plain'),
+//         m.callbackButton('Italic', 'italic')
+//       ])
+//     )
+// )
 // bot.command('album', (ctx) => {
 //   ctx.replyWithMediaGroup([
 //     {
