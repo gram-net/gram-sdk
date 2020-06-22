@@ -30,7 +30,7 @@ fi
 DEPSGLOBAL="vim tar git curl tmux chrony ca-certificates gnupg chrony make wget cmake tcpdump net-tools"
 DEPSDNF="python2 zlib-devel glibc-headers readline-devel libmicrohttpd openssl-devel gperftools-devel gflags-devel"
 DEPSYUM="python2 zlib-devel glibc-headers readline-devel libmicrohttpd openssl-devel gperftools-devel gflags-devel"
-DEPSAPT="libtinfo5 python gcc pkg-config libgsl0-dev build-essential libghc-zlib-dev libreadline-dev libmicrohttpd-dev libssl-dev libgflags-dev gperf"
+DEPSAPT="cargo gawk libtinfo5 python gcc pkg-config libgsl0-dev build-essential libghc-zlib-dev libreadline-dev libmicrohttpd-dev libssl-dev libgflags-dev gperf"
 
 export DEBIAN_FRONTEND=noninteractive
 export DEBCONF_FRONTEND=noninteractive
@@ -68,7 +68,8 @@ elif [ -n "$APT" ]; then
     apt-get upgrade -y
   fi
   apt-get install -y --no-install-recommends $DEPSAPT $DEPSGLOBAL
-  dpkg -i $GRAMCORE/libreadline7_7.0-3_amd64.deb | :
+  echo "Installing libreadline7..."
+  dpkg -i $GRAMCORE/libreadline7_7.0-3_amd64.deb
 else
   ec "Unknown Linux package manager configuration. Exiting..."
   exit 1

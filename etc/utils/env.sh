@@ -95,6 +95,7 @@ echo "GRAM_API_URI=${GRAM_API_URI}" >>$GRAMCORE/.env
 echo "TON_LOGLEVEL=${TON_LOGLEVEL}" >>$GRAMCORE/.env
 echo "DOTENV_CONFIG_PATH=${DOTENV_CONFIG_PATH}" >>$GRAMCORE/.env
 echo "FIFTPATH=${FIFTPATH}" >>$GRAMCORE/.env
+echo "LIBFIFT=${LIBFIFT}" >>$GRAMCORE/.env
 echo "PROFILE=${PROFILE}" >>$GRAMCORE/.env
 echo "TON_SMARTCONT=${TON_SMARTCONT}" >>$GRAMCORE/.env
 echo "NODETYPE=${NODETYPE}" >>$GRAMCORE/.env
@@ -109,6 +110,8 @@ echo "RUNVALIDATOR=${RUNVALIDATOR}" >>$GRAMCORE/.env
 echo "RUNAPI=${RUNAPI}" >>$GRAMCORE/.env
 echo "RUNNAVIGATOR=${RUNNAVIGATOR}" >>$GRAMCORE/.env
 echo "DEPLOYTYPE=${DEPLOYTYPE}" >>$GRAMCORE/.env
+echo "HOSTNAME=$(hostname -s)" >>$GRAMCORE/.env
+echo "KEYS_DIR=${KEYS_DIR}" >>$GRAMCORE/.env
 
 rm -f $GRAMCORE/api/.env >/dev/null 2>&1
 rm -f $GRAMCORE/navigator/.env >/dev/null 2>&1

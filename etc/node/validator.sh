@@ -10,7 +10,7 @@ if test -f "$FILE"; then
 fi
 ec "Configuring validator node"
 source gram configure
-source gram validator-keys
 source gram download-config
+source gram validator-keys
 gram config-helper
 echo "DONE" >$PROFILE/profile-done

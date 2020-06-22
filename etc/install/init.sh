@@ -15,4 +15,6 @@ fi
 
 source $GRAMCORE/bin/gram nodejs
 
+source $GRAMCORE/bin/gram rust
+
 ec "GRAM has been installed. Exit your login shell and reconnect, then run 'gram deploy' or 'gram help'"

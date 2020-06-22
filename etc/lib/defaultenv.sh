@@ -20,10 +20,11 @@ export NODE_OPTIONS="--max_old_space_size=8192"
 # these are automatically set inside the docker containers
 # use these settings for bare metal dev
 export DOTENV_CONFIG_PATH=$GRAMCORE/.env
-export FIFTPATH=$GRAMCORE/lib/fift:$GRAMCORE/lib/smartcont
+export TON_SMARTCONT=$GRAMCORE/lib/smartcont
+export LIBFIFT=$GRAMCORE/lib/fift
+export FIFTPATH=$LIBFIFT:$TON_SMARTCONT
 export LS_PUB=$GRAMCORE/profile/keys/liteserver.pub
 export PROFILE=$GRAMCORE/profile
-export TON_SMARTCONT=$GRAMCORE/lib/smartcont
 # these are going to be switched up by env.sh
 export NODE_ENV=development
 export RUNVALIDATOR=1
@@ -31,7 +32,8 @@ export RUNNAVIGATOR=1
 export RUNAPI=1
 export NODETYPE=validator
 export DEPLOYTYPE=compose
-export GLOBALCONFIG="https://raw.githubusercontent.com/tonlabs/main.ton.dev/master/configs/ton-global.config.json"
+export GLOBALCONFIG="https://raw.githubusercontent.com/tonlabs/net.ton.dev/master/configs/ton-global.config.json"
 export IMAGEURI="registry.gitlab.com/gram-net/gram-sdk:latest"
 export JSON_EXPLORER_URI="http://localhost"
 export GRAM_API_URI="http://localhost"
+export KEYS_DIR=$GRAMCORE/profile/keys

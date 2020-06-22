@@ -20,6 +20,8 @@ To deploy a node: `gram deploy`
 
 Run `gram mux` to see logs
 
+### Main Dev Links
+
 When done deploying, visit these pages:
 
 <http://localhost:8088> for GRAM Navigator Web App
@@ -33,6 +35,27 @@ When done deploying, visit these pages:
 <http://localhost:8083/last> HTML Block explorer
 
 JSON Block explorer uses same endpoints as HTML explorer
+
+### Join Elections
+
+You must perform the following steps after your first profile is created (call `gram deploy` to generate the first profile) because clearing profile will clear wallets!
+
+Create wallet.
+`gram create-wallet`
+
+Finalize the global config (Optionally reconfigure here)
+`gram env`
+
+Deploy wallet (you must send some money to it first!)
+`gram deploy-wallet`
+
+Run election interval job (uses 'watch')
+`while [ true ]; do gram election $stake; sleep 120; done;`
+
+Get money (for regtest mode only)
+`gram testgiver $address`
+
+### Mission Control
 
 To stop all GRAM services: `gram shutdown`
 
@@ -80,6 +103,8 @@ CONSOLE_PORT=6303
 LITESERVER_PORT=6304
 JSON_EXPLORER_PORT=8082
 WEB_EXPLORER_PORT=8083
+DOCS_PORT=8090
+NAV_PORT=8088
 ```
 
 [Docker Developer Reference](./validator-node-admin/docker.md)
