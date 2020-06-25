@@ -1,17 +1,17 @@
 if ! [ -n "$GRAMCLI" ]; then
-  echo "Run scripts using 'gram \$command'"
-  gram help
-  exit 1
+    echo "Run scripts using 'gram \$command'"
+    gram help
+    exit 1
 fi
 # set -x
 DEBUG="yes"
 STAKE="${1:-100000}"
 
 "lite-client" \
-  -p "${LS_PUB}" \
-  -a "${GRAM_IP}:${LITESERVER_PORT}" \
-  -rc "getconfig 1" -rc "quit" \
-  &>"${KEYS_DIR}/elector-addr"
+    -p "${LS_PUB}" \
+    -a "${GRAM_IP}:${LITESERVER_PORT}" \
+    -rc "getconfig 1" -rc "quit" \
+    &>"${KEYS_DIR}/elector-addr"
 
 awk -v KEYS_DIR="${KEYS_DIR}" -v GRAMCORE="${GRAMCORE}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" '{
     if (substr($1, length($1)-13) == "ConfigParam(1)") {
@@ -29,8 +29,8 @@ awk -v KEYS_DIR="${KEYS_DIR}" -v GRAMCORE="${GRAMCORE}" -v LS_PUB="${LS_PUB}" -v
 }' "${KEYS_DIR}/elector-addr" >"${KEYS_DIR}/elector-run"
 
 if [ "$DEBUG" = "yes" ]; then
-  echo "${KEYS_DIR}/elector-run:"
-  cat "${KEYS_DIR}/elector-run"
+    echo "${KEYS_DIR}/elector-run:"
+    cat "${KEYS_DIR}/elector-run"
 fi
 
 bash "${KEYS_DIR}/elector-run"
@@ -52,8 +52,8 @@ awk '{
 election_id=$(cat "${KEYS_DIR}/election-id")
 
 if [ "$election_id" == "0" ]; then
-  date +"%F %T No current elections"
-  awk -v KEYS_DIR="${KEYS_DIR}" -v GRAMCORE="${GRAMCORE}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" '{
+    date +"%F %T No current elections"
+    awk -v KEYS_DIR="${KEYS_DIR}" -v GRAMCORE="${GRAMCORE}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" '{
         if (($1 == "new") && ($2 == "wallet") && ($3 == "address")) {
             addr = substr($5, 4)
         } else if (substr($1, length($1)-13) == "ConfigParam(1)") {
@@ -65,23 +65,23 @@ if [ "$election_id" == "0" ]; then
         }
     }' "${KEYS_DIR}/validator-dump" "${KEYS_DIR}/elector-addr" >"${KEYS_DIR}/recover-run"
 
-  if [ "$DEBUG" = "yes" ]; then
-    echo "${KEYS_DIR}/recover-run:"
-    cat "${KEYS_DIR}/recover-run"
-  fi
+    if [ "$DEBUG" = "yes" ]; then
+        echo "${KEYS_DIR}/recover-run:"
+        cat "${KEYS_DIR}/recover-run"
+    fi
 
-  bash "${KEYS_DIR}/recover-run"
+    bash "${KEYS_DIR}/recover-run"
 
-  awk '{
+    awk '{
         if ($1 == "result:") {
             print $3
         }
     }' "${KEYS_DIR}/recover-state" >"${KEYS_DIR}/recover-amount"
 
-  recover_amount=$(cat "${KEYS_DIR}/recover-amount")
+    recover_amount=$(cat "${KEYS_DIR}/recover-amount")
 
-  if [ "$recover_amount" != "0" ]; then
-    awk -v KEYS_DIR="${KEYS_DIR}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" '{
+    if [ "$recover_amount" != "0" ]; then
+        awk -v KEYS_DIR="${KEYS_DIR}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" '{
             if ($1 == "Bounceable") {
                 printf "lite-client ";
                 printf "-p " LS_PUB " -a " GRAM_IP ":" LITESERVER_PORT;
@@ -89,19 +89,20 @@ if [ "$election_id" == "0" ]; then
             }
         }' "${KEYS_DIR}/validator-dump" >"${KEYS_DIR}/recover-run1"
 
-    bash "${KEYS_DIR}/recover-run1"
+        bash "${KEYS_DIR}/recover-run1"
 
-    awk -v KEYS_DIR="${KEYS_DIR}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" '{
+        awk -v KEYS_DIR="${KEYS_DIR}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" '{
             if ($1 == "Bounceable") {
                 printf "source gram lc runmethod " $6 " seqno;";
                 print  "echo $LCRES_FINAL > " KEYS_DIR "/get-seqno"
             }
         }' "${KEYS_DIR}/validator-dump" >"${KEYS_DIR}/get-seqno-run"
 
-    bash "${KEYS_DIR}/get-seqno-run"
-    SEQNO=$(cat $KEYS_DIR/get-seqno)
+        sleep 30
+        bash "${KEYS_DIR}/get-seqno-run"
+        SEQNO=$(cat $KEYS_DIR/get-seqno)
 
-    awk -v SEQNO="${SEQNO}" -v validator="validator" -v KEYS_DIR="${KEYS_DIR}" -v GRAMCORE="${GRAMCORE}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" -v LIBFIFT="${LIBFIFT}" -v TON_SMARTCONT="${TON_SMARTCONT}" '{
+        awk -v SEQNO="${SEQNO}" -v validator="validator" -v KEYS_DIR="${KEYS_DIR}" -v GRAMCORE="${GRAMCORE}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" -v LIBFIFT="${LIBFIFT}" -v TON_SMARTCONT="${TON_SMARTCONT}" '{
             if (NR == 1) {
                 elector = $0
             } else if ($1 == "data:(just") {
@@ -121,16 +122,16 @@ if [ "$election_id" == "0" ]; then
             }
         }' "${KEYS_DIR}/elector-addr-base64" "${KEYS_DIR}/recover-state" >"${KEYS_DIR}/recover-run2"
 
-    if [ "$DEBUG" = "yes" ]; then
-      echo "${KEYS_DIR}/recover-run2:"
-      cat "${KEYS_DIR}/recover-run2"
+        if [ "$DEBUG" = "yes" ]; then
+            echo "${KEYS_DIR}/recover-run2:"
+            cat "${KEYS_DIR}/recover-run2"
+        fi
+
+        bash "${KEYS_DIR}/recover-run2"
+        date +"INFO: %F %T Recover of $recover_amount RB requested"
     fi
 
-    bash "${KEYS_DIR}/recover-run2"
-    date +"INFO: %F %T Recover of $recover_amount RB requested"
-  fi
-
-  exit
+    exit
 fi
 
 awk -v KEYS_DIR="${PROFILE}/keys" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v LITESERVER_PORT="${LITESERVER_PORT}" '{
@@ -142,8 +143,8 @@ awk -v KEYS_DIR="${PROFILE}/keys" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" 
 }' "${KEYS_DIR}/validator-dump" >"${KEYS_DIR}/wallet-state-run"
 
 if [ "$DEBUG" = "yes" ]; then
-  echo "${KEYS_DIR}/wallet-state-run:"
-  cat "${KEYS_DIR}/wallet-state-run"
+    echo "${KEYS_DIR}/wallet-state-run:"
+    cat "${KEYS_DIR}/wallet-state-run"
 fi
 
 bash "${KEYS_DIR}/wallet-state-run"
@@ -160,47 +161,47 @@ has_grams=$(awk -v validator="validator" '{
 }' "${KEYS_DIR}/wallet-state")
 
 if [ "$has_grams" = "" ]; then
-  echo "INFO: \$has_grams is empty"
-  exit
+    echo "INFO: \$has_grams is empty"
+    exit
 fi
 
 echo "INFO: has_grams = ${has_grams}"
 
 if [ -f "${KEYS_DIR}/stop-election" ]; then
-  echo "WARNING: manual stop of participation in elections with ${KEYS_DIR}/stop-election file"
-  exit
+    echo "WARNING: manual stop of participation in elections with ${KEYS_DIR}/stop-election file"
+    exit
 fi
 
 if [ -f "${KEYS_DIR}/active-election-id" ]; then
-  active_election_id=$(cat "${KEYS_DIR}/active-election-id")
-  if [ "$active_election_id" == "$election_id" ]; then
-    ec "stopping, because election and active election are same"
-    exit
-  fi
+    active_election_id=$(cat "${KEYS_DIR}/active-election-id")
+    if [ "$active_election_id" == "$election_id" ]; then
+        ec "stopping, because election and active election are same"
+        exit
+    fi
 fi
 
 cp "${KEYS_DIR}/election-id" "${KEYS_DIR}/active-election-id"
 date +"INFO: %F %T election_id = $election_id"
 set -x
 "validator-engine-console" \
-  -k "${KEYS_DIR}/client" \
-  -p "${KEYS_DIR}/server.pub" \
-  -a "${GRAM_IP}:${CONSOLE_PORT}" \
-  -c "newkey" -c "quit" \
-  &>"${KEYS_DIR}/validator-election-key"
+    -k "${KEYS_DIR}/client" \
+    -p "${KEYS_DIR}/server.pub" \
+    -a "${GRAM_IP}:${CONSOLE_PORT}" \
+    -c "newkey" -c "quit" \
+    &>"${KEYS_DIR}/validator-election-key"
 
 "validator-engine-console" \
-  -k "${KEYS_DIR}/client" \
-  -p "${KEYS_DIR}/server.pub" \
-  -a "${GRAM_IP}:${CONSOLE_PORT}" \
-  -c "newkey" -c "quit" \
-  &>"${KEYS_DIR}/validator-election-adnl-key"
+    -k "${KEYS_DIR}/client" \
+    -p "${KEYS_DIR}/server.pub" \
+    -a "${GRAM_IP}:${CONSOLE_PORT}" \
+    -c "newkey" -c "quit" \
+    &>"${KEYS_DIR}/validator-election-adnl-key"
 
 "lite-client" \
-  -p "${LS_PUB}" \
-  -a "${GRAM_IP}:${LITESERVER_PORT}" \
-  -rc "getconfig 15" -rc "quit" \
-  &>"${KEYS_DIR}/elector-params"
+    -p "${LS_PUB}" \
+    -a "${GRAM_IP}:${LITESERVER_PORT}" \
+    -rc "getconfig 15" -rc "quit" \
+    &>"${KEYS_DIR}/elector-params"
 set +x
 awk -v validator="validator" -v KEYS_DIR="${KEYS_DIR}" -v LIBFIFT="${LIBFIFT}" -v TON_SMARTCONT="${TON_SMARTCONT}" -v GRAM_IP="${GRAM_IP}" -v CONSOLE_PORT="${CONSOLE_PORT}" '{
     if (NR == 1) {
@@ -238,8 +239,8 @@ awk -v validator="validator" -v KEYS_DIR="${KEYS_DIR}" -v LIBFIFT="${LIBFIFT}" -
 }' "${KEYS_DIR}/election-id" "${KEYS_DIR}/validator-election-key" "${KEYS_DIR}/validator-election-adnl-key" "${KEYS_DIR}/elector-params" >"${KEYS_DIR}/elector-run1"
 
 if [ "$DEBUG" = "yes" ]; then
-  echo "${KEYS_DIR}/elector-run1:"
-  cat "${KEYS_DIR}/elector-run1"
+    echo "${KEYS_DIR}/elector-run1:"
+    cat "${KEYS_DIR}/elector-run1"
 fi
 
 bash "${KEYS_DIR}/elector-run1"
@@ -256,8 +257,8 @@ awk -v validator="validator" -v KEYS_DIR="${KEYS_DIR}" -v GRAM_IP="${GRAM_IP}" -
 }' "${KEYS_DIR}/validator-request-dump" "${KEYS_DIR}/validator-election-key" >"${KEYS_DIR}/elector-run2"
 
 if [ "$DEBUG" = "yes" ]; then
-  echo "${KEYS_DIR}/elector-run2:"
-  cat "${KEYS_DIR}/elector-run2"
+    echo "${KEYS_DIR}/elector-run2:"
+    cat "${KEYS_DIR}/elector-run2"
 fi
 
 bash "${KEYS_DIR}/elector-run2"
@@ -279,8 +280,8 @@ awk -v validator="validator" -v KEYS_DIR="${KEYS_DIR}" -v LIBFIFT="${LIBFIFT}" -
 }' "${KEYS_DIR}/election-id" "${KEYS_DIR}/validator-request-dump1" "${KEYS_DIR}/validator-election-adnl-key" >"${KEYS_DIR}/elector-run3"
 
 if [ "$DEBUG" = "yes" ]; then
-  echo "${KEYS_DIR}/elector-run3:"
-  cat "${KEYS_DIR}/elector-run3"
+    echo "${KEYS_DIR}/elector-run3:"
+    cat "${KEYS_DIR}/elector-run3"
 fi
 
 bash "${KEYS_DIR}/elector-run3"
@@ -292,6 +293,7 @@ awk -v KEYS_DIR="${KEYS_DIR}" -v LS_PUB="${LS_PUB}" -v GRAM_IP="${GRAM_IP}" -v L
         }
     }' "${KEYS_DIR}/validator-dump" >"${KEYS_DIR}/get-seqno-run"
 
+sleep 30
 bash "${KEYS_DIR}/get-seqno-run"
 SEQNO=$(cat $KEYS_DIR/get-seqno)
 
@@ -315,8 +317,8 @@ awk -v SEQNO="${SEQNO}" -v validator="validator" -v KEYS_DIR="${KEYS_DIR}" -v LS
 }' "${KEYS_DIR}/elector-addr-base64" "${KEYS_DIR}/wallet-state" >"${KEYS_DIR}/elector-run4"
 
 if [ "$DEBUG" = "yes" ]; then
-  echo "${KEYS_DIR}/elector-run4:"
-  cat "${KEYS_DIR}/elector-run4"
+    echo "${KEYS_DIR}/elector-run4:"
+    cat "${KEYS_DIR}/elector-run4"
 fi
 
 bash "${KEYS_DIR}/elector-run4"
