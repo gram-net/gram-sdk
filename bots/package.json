@@ -23,7 +23,7 @@
     "test": "yarn start test"
   },
   "dependencies": {
-    "axios": "~0.19.2",
+    "axios": "~0.21.1",
     "bip39-ts": "~1.0.6",
     "chalk": "~4.0.0",
     "docsify": "~4.11.3",
