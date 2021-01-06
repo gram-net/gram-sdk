@@ -43,7 +43,7 @@
     "yarn": "~1.22.4"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "form-data": "^3.0.0",
     "tweetnacl": "~1.0.3",
     "uuid": "^7.0.2"
