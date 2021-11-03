@@ -103,7 +103,7 @@
     "reflect-metadata": "~0.1.13",
     "unzip": "~0.1.11",
     "unzip-stream": "~0.3.0",
-    "validator": "~13.0.0",
+    "validator": "~13.7.0",
     "vue": "~2.6.11",
     "vue-class-component": "~7.2.3",
     "vue-devtools": "~5.1.3",
