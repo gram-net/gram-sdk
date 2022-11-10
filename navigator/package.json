@@ -80,7 +80,7 @@
     "core-js": "~3.6.5",
     "direct-vuex": "~0.11.0",
     "ed25519-hd-key": "~1.1.2",
-    "electron": "~8.3.0",
+    "electron": "~18.3.7",
     "electron-serve": "~1.0.0",
     "fast-average-color": "~6.0.2",
     "fingerprintjs2": "~2.1.0",
